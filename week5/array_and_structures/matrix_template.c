@@ -1,7 +1,7 @@
 /*
-	ÀÛ¼ºÀÚ: ±èµ¿Áø
-	³»¿ë: matrix ¿¬»ê ÇÔ¼ö ÁıÇÕ
-	»ó¼¼ ³»¿ë
+	ì‘ì„±ì: ê¹€ë™ì§„
+	ë‚´ìš©: matrix ì—°ì‚° í•¨ìˆ˜ ì§‘í•©
+	ìƒì„¸ ë‚´ìš©
 		matrixSum()
 		matrixMulti()
 		matrixTranspose()
@@ -12,26 +12,26 @@
 #if TEMPLATE_MATRIX
 
 /*
-	±â´É: µÎ °³ÀÇ matrix°¡ ÁÖ¾îÁö¸é µÎ matrixÀÇ ÇÕÀ» °è»êÇÑ´Ù.
+	ê¸°ëŠ¥: ë‘ ê°œì˜ matrixê°€ ì£¼ì–´ì§€ë©´ ë‘ matrixì˜ í•©ì„ ê³„ì‚°í•œë‹¤.
 	input: matrixA, matrixB, rowIdx, colNum
-			rowNum: ÇàÀÇ °³¼ö
-			colNum: ¿­ÀÇ °³¼ö
+			rowNum: í–‰ì˜ ê°œìˆ˜
+			colNum: ì—´ì˜ ê°œìˆ˜
 	output: matrixResult
 			matrixResult = matrixA + matrixB
 */
 void matrixSum(int **matrixResult, int **matrixA, int **matrixB, int rowNum, int colNum)
 {
 	//
-	// Ã¤¿ï ºÎºĞ
+	// ì±„ìš¸ ë¶€ë¶„
 	//
 	// 
 }
 
 /*
-	±â´É: µÎ °³ÀÇ matrix°¡ ÁÖ¾îÁö¸é µÎ matrixÀÇ °öÀ» °è»êÇÑ´Ù.
+	ê¸°ëŠ¥: ë‘ ê°œì˜ matrixê°€ ì£¼ì–´ì§€ë©´ ë‘ matrixì˜ ê³±ì„ ê³„ì‚°í•œë‹¤.
 	input: matrixA, matrixB, rowIdx, colNum
-			rowNum: ÇàÀÇ °³¼ö
-			colNum: ¿­ÀÇ °³¼ö
+			rowNum: í–‰ì˜ ê°œìˆ˜
+			colNum: ì—´ì˜ ê°œìˆ˜
 	output: matrixResult
 			matrixResult = matrixA * matrixB
 */
@@ -39,25 +39,25 @@ int matrixMulti(int **matrixResult, int **matrixA, int rowNumOfA, int colNumOfA,
 {
 	int	rowIdx, colIdx, kIdx;
 
-	if(colNumOfA != rowNumOfB) // matrix °ö¼ÀÀ» ÇÒ ¼ö ¾øÀ½.
+	if(colNumOfA != rowNumOfB) // matrix ê³±ì…ˆì„ í•  ìˆ˜ ì—†ìŒ.
 		return -1;
 
 	//
-	// Ã¤¿ï ºÎºĞ
+	// ì±„ìš¸ ë¶€ë¶„
 	//
-	// matrixResultÀÇ °¢ ¿ø¼ÒÀÇ °ªÀ» ±¸ÇÏ±â À§ÇØ¼­ ¸ÅÆ®¸¯½ºÀÇ °¢ ¿ø¼Ò¸¦ ½ºÄµÇÑ´Ù.
-	// scanÇÏ¸é¼­ °¢ ¿ø¼ÒÀÇ °ªÀ» °è»êÇÏ±â À§ÇØ¼­ ¾Æ·¡ ÀÛ¾÷À» ¼öÇàÇÑ´Ù.
-	//		matrixAÀÇ °¢ Çà°ú matrixBÀÇ °¢ ¿­¿¡ ´ëÇØ¼­ º¤ÅÍ³»ÀûÀ» ±¸ÇÑ´Ù.
-	//		º¤ÅÍ³»ÀûÀÌ¶õ (a1, b1, c1)¿Í (a2, b2, c3)ÀÇ µÎ º¤ÅÍ°¡ ÁÖ¿©Á³À» ¶§ a1*b1 + a2*b2 + a3*b3¸¦ ±¸ÇÏ´Â °ÍÀÌ´Ù. 
+	// matrixResultì˜ ê° ì›ì†Œì˜ ê°’ì„ êµ¬í•˜ê¸° ìœ„í•´ì„œ ë§¤íŠ¸ë¦­ìŠ¤ì˜ ê° ì›ì†Œë¥¼ ìŠ¤ìº”í•œë‹¤.
+	// scaní•˜ë©´ì„œ ê° ì›ì†Œì˜ ê°’ì„ ê³„ì‚°í•˜ê¸° ìœ„í•´ì„œ ì•„ë˜ ì‘ì—…ì„ ìˆ˜í–‰í•œë‹¤.
+	//		matrixAì˜ ê° í–‰ê³¼ matrixBì˜ ê° ì—´ì— ëŒ€í•´ì„œ ë²¡í„°ë‚´ì ì„ êµ¬í•œë‹¤.
+	//		ë²¡í„°ë‚´ì ì´ë€ (a1, b1, c1)ì™€ (a2, b2, c3)ì˜ ë‘ ë²¡í„°ê°€ ì£¼ì—¬ì¡Œì„ ë•Œ a1*b1 + a2*b2 + a3*b3ë¥¼ êµ¬í•˜ëŠ” ê²ƒì´ë‹¤. 
 
 	return 0;
 }
 
 /*
-	±â´É: ÇÑ °³ÀÇ matrix°¡ ÁÖ¾îÁö¸é ÁÖ¾îÁø matrixÀÇ tranposed matrix¸¦ ±¸ÇÑ´Ù.
+	ê¸°ëŠ¥: í•œ ê°œì˜ matrixê°€ ì£¼ì–´ì§€ë©´ ì£¼ì–´ì§„ matrixì˜ tranposed matrixë¥¼ êµ¬í•œë‹¤.
 	input: matrixA, rowNum, colNum
-			rowNum: ÇàÀÇ °³¼ö
-			colNum: ¿­ÀÇ °³¼ö
+			rowNum: í–‰ì˜ ê°œìˆ˜
+			colNum: ì—´ì˜ ê°œìˆ˜
 	output: matrixAT
 			matrixAT[i][j] = matrixA[j][i]
 */
@@ -65,10 +65,10 @@ void matrixTranspose(int **matrixAT, int **matrixA, int rowNum, int colNum)
 {
 
 	//
-	// Ã¤¿ï ºÎºĞ
+	// ì±„ìš¸ ë¶€ë¶„
 	//
-	// matrixAT¿¡ °¢ ¿ø¼ÒÀÇ °ªÀ» ÀúÀåÇÑ´Ù.
-	// ÀÌ¸¦ À§ÇØ¼­ matrixAÀÇ °¢ ¿ø¼ÒµéÀ» scanÇÏ¸é¼­ ¾Æ·¡ ÀÛ¾÷À» ¼öÇàÇÑ´Ù.
+	// matrixATì— ê° ì›ì†Œì˜ ê°’ì„ ì €ì¥í•œë‹¤.
+	// ì´ë¥¼ ìœ„í•´ì„œ matrixAì˜ ê° ì›ì†Œë“¤ì„ scaní•˜ë©´ì„œ ì•„ë˜ ì‘ì—…ì„ ìˆ˜í–‰í•œë‹¤.
 	//		matrixAT[[i][j] = matrixA[j][i]
 	//
 }

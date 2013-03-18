@@ -1,7 +1,7 @@
 /*
-	ÀÛ¼ºÀÚ: ±èµ¿Áø
-	ÀÛ¼ºÀÏ: 2013.04.02
-	±¸¼º ÇÔ¼ö
+	ì‘ì„±ì: ê¹€ë™ì§„
+	ì‘ì„±ì¼: 2013.04.02
+	êµ¬ì„± í•¨ìˆ˜
 		sparse_matrix_creation()
 		sparse_matrix_transpose()
 		sparse_matrix_fast_transpose()
@@ -18,7 +18,7 @@
 extern int **make2DArray(int rowNum, int colNum);
 
 //
-// sparse matrix¸¦ ¸¸µé±â À§ÇØ¼­ 80%ÀÇ ¿ø¼ÒµéÀ» °­Á¦ÀûÀ¸·Î 0À¸·Î Ä¡È¯ÇÏ´Â ÇÔ¼ö
+// sparse matrixë¥¼ ë§Œë“¤ê¸° ìœ„í•´ì„œ 80%ì˜ ì›ì†Œë“¤ì„ ê°•ì œì ìœ¼ë¡œ 0ìœ¼ë¡œ ì¹˜í™˜í•˜ëŠ” í•¨ìˆ˜
 //
 void setManyElementsOfMatrixToZero(int **matrix, int rowNum, int colNum)
 {
@@ -33,7 +33,7 @@ void setManyElementsOfMatrixToZero(int **matrix, int rowNum, int colNum)
 }
 
 //
-// matrix°¡ ÁÖ¾îÁö¸é sparse_matrix ÀÚ·á±¸Á¶·Î º¯È¯ÇØ¼­ returnÇÏ´Â ÇÔ¼ö
+// matrixê°€ ì£¼ì–´ì§€ë©´ sparse_matrix ìë£Œêµ¬ì¡°ë¡œ ë³€í™˜í•´ì„œ returní•˜ëŠ” í•¨ìˆ˜
 //
 sparse_matrix_t *sparse_matrix_creation(int **matrix, int rowNum, int colNum)
 {
@@ -42,27 +42,27 @@ sparse_matrix_t *sparse_matrix_creation(int **matrix, int rowNum, int colNum)
 	int	rowIdx, colIdx;
 	int	eleIdx;
 
-	// ÀÔ·Â matrixÀÇ °¢ element¸¦ È®ÀÎÇØ¼­ 0ÀÌ ¾Æ´Ñ ¿ø¼ÒµéÀÇ °³¼ö¸¦ ÃøÁ¤ÇÑ´Ù.
+	// ì…ë ¥ matrixì˜ ê° elementë¥¼ í™•ì¸í•´ì„œ 0ì´ ì•„ë‹Œ ì›ì†Œë“¤ì˜ ê°œìˆ˜ë¥¼ ì¸¡ì •í•œë‹¤.
 	for(rowIdx = 0; rowIdx < rowNum; rowIdx++) {
 		for(colIdx = 0; colIdx < colNum; colIdx++) {
-			if(matrix[rowIdx][colIdx] != 0) eleNum++; // 0ÀÌ ¾Æ´Ñ ¿ø¼Ò °³¼ö¸¶´Ù 1 Áõ°¡
+			if(matrix[rowIdx][colIdx] != 0) eleNum++; // 0ì´ ì•„ë‹Œ ì›ì†Œ ê°œìˆ˜ë§ˆë‹¤ 1 ì¦ê°€
 		}
 	}
 
-	sparse_matrix = (sparse_matrix_t *)malloc(sizeof(sparse_matrix_t) * (eleNum + 1) ); // ¿ø¼ÒÀÇ °³¼ö¸¦ ÀúÀåÇÏ±â À§ÇØ¼­ 1°³ Ãß°¡·Î ¸Ş¸ğ¸® ÇÒ´çÇÑ´Ù.
+	sparse_matrix = (sparse_matrix_t *)malloc(sizeof(sparse_matrix_t) * (eleNum + 1) ); // ì›ì†Œì˜ ê°œìˆ˜ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•´ì„œ 1ê°œ ì¶”ê°€ë¡œ ë©”ëª¨ë¦¬ í• ë‹¹í•œë‹¤.
 
-	// sparse matrix ÀÚ·á±¸Á¶¿¡¼­ ¹è¿­ÀÇ Ã¹ ¹øÂ° ¿ø¼Ò¿¡´Â ÇàÀÇ °³¼ö, ¿­ÀÇ °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ °³¼ö¸¦ ÀúÀå
+	// sparse matrix ìë£Œêµ¬ì¡°ì—ì„œ ë°°ì—´ì˜ ì²« ë²ˆì§¸ ì›ì†Œì—ëŠ” í–‰ì˜ ê°œìˆ˜, ì—´ì˜ ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ì†Œì˜ ê°œìˆ˜ë¥¼ ì €ì¥
 	eleIdx = 0;
-	sparse_matrix[eleIdx].rowIdx = rowNum; // row(Çà)ÀÇ °³¼ö ÀúÀå
-	sparse_matrix[eleIdx].colIdx = colNum; // column(¿­) °³¼ö ÀúÀå
-	sparse_matrix[eleIdx].value = eleNum; // 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ °³¼ö ÀúÀå
+	sparse_matrix[eleIdx].rowIdx = rowNum; // row(í–‰)ì˜ ê°œìˆ˜ ì €ì¥
+	sparse_matrix[eleIdx].colIdx = colNum; // column(ì—´) ê°œìˆ˜ ì €ì¥
+	sparse_matrix[eleIdx].value = eleNum; // 0ì´ ì•„ë‹Œ ì›ì†Œì˜ ê°œìˆ˜ ì €ì¥
 	eleIdx++;
 
-	// matrixÀÇ ¸ğµç ¿ø¼Ò¸¦ scanÇÏ¸é¼­ 0ÀÌ ¾Æ´Ñ ¿ø¼Ò¸¦ sparse_matrix ¹è¿­¿¡ ÀúÀåÇÑ´Ù.
-	// ÀúÀåµÇ´Â °ªÀº 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ ÇàÀÇ À§Ä¡, ¿­ÀÇ À§Ä¡, ¿ø¼ÒÀÇ °ªÀÌ´Ù.
+	// matrixì˜ ëª¨ë“  ì›ì†Œë¥¼ scaní•˜ë©´ì„œ 0ì´ ì•„ë‹Œ ì›ì†Œë¥¼ sparse_matrix ë°°ì—´ì— ì €ì¥í•œë‹¤.
+	// ì €ì¥ë˜ëŠ” ê°’ì€ 0ì´ ì•„ë‹Œ ì›ì†Œì˜ í–‰ì˜ ìœ„ì¹˜, ì—´ì˜ ìœ„ì¹˜, ì›ì†Œì˜ ê°’ì´ë‹¤.
 	for(rowIdx = 0; rowIdx < rowNum; rowIdx++) {
 		for(colIdx = 0; colIdx < colNum; colIdx++) {
-			if(matrix[rowIdx][colIdx] != 0) { // 0ÀÌ ¾Æ´Ñ °æ¿ì ÀúÀå
+			if(matrix[rowIdx][colIdx] != 0) { // 0ì´ ì•„ë‹Œ ê²½ìš° ì €ì¥
 				sparse_matrix[eleIdx].rowIdx = rowIdx;
 				sparse_matrix[eleIdx].colIdx = colIdx;
 				sparse_matrix[eleIdx].value = matrix[rowIdx][colIdx];
@@ -79,24 +79,24 @@ int sparse_matrix_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 	int	colIdx, eleIdx;
 	int	curPosInDst = 0;
 
-	if(!src || !dst) return -1; // source¿¡ µ¥ÀÌÅ¸°¡ ¾ø°Å³ª destination ¸Ş¸ğ¸® °ø°£ÀÌ ¾øÀ¸¸é -1À» returnÇÑ´Ù.
+	if(!src || !dst) return -1; // sourceì— ë°ì´íƒ€ê°€ ì—†ê±°ë‚˜ destination ë©”ëª¨ë¦¬ ê³µê°„ì´ ì—†ìœ¼ë©´ -1ì„ returní•œë‹¤.
 
-	// dst[0]¿¡ row °³¼ö, col °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼ö °³¼ö¸¦ ÀúÀåÇÑ´Ù.
-	dst[0].rowIdx = src[0].colIdx; // srcÀÇ ¿­ÀÇ °³¼ö°¡ dstÀÇ ÇàÀÇ °³¼ö°¡ µÈ´Ù.
-	dst[0].colIdx = src[0].rowIdx; // srcÀÇ ÇàÀÇ °³¼ö°¡ dstÀÇ ¿­ÀÇ °³¼ö°¡ µÈ´Ù.
-	dst[0].value = src[0].value; // 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ °³¼ö´Â src¿Í dst°¡ °°´Ù. ¿Ö³ÄÇÏ¸é, srcÀÇ ¸ğµç ¿ø¼Ò¸¦ º¹»çÇÏ±â ¶§¹®ÀÌ´Ù. 
+	// dst[0]ì— row ê°œìˆ˜, col ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ìˆ˜ ê°œìˆ˜ë¥¼ ì €ì¥í•œë‹¤.
+	dst[0].rowIdx = src[0].colIdx; // srcì˜ ì—´ì˜ ê°œìˆ˜ê°€ dstì˜ í–‰ì˜ ê°œìˆ˜ê°€ ëœë‹¤.
+	dst[0].colIdx = src[0].rowIdx; // srcì˜ í–‰ì˜ ê°œìˆ˜ê°€ dstì˜ ì—´ì˜ ê°œìˆ˜ê°€ ëœë‹¤.
+	dst[0].value = src[0].value; // 0ì´ ì•„ë‹Œ ì›ì†Œì˜ ê°œìˆ˜ëŠ” srcì™€ dstê°€ ê°™ë‹¤. ì™œëƒí•˜ë©´, srcì˜ ëª¨ë“  ì›ì†Œë¥¼ ë³µì‚¬í•˜ê¸° ë•Œë¬¸ì´ë‹¤. 
 
 	if(src[0].value == 0)
-		return 0; // ¿ø¼ÒÀÇ °³¼ö°¡ 0ÀÌ¹Ç·Î ´õ ÀÌ»ó ÁøÇàÇÒ ÇÊ¿ä ¾øÀÌ return. Á¤»óÀûÀÎ ¿Ï·á¿¡ ÇØ´çµÊ.
+		return 0; // ì›ì†Œì˜ ê°œìˆ˜ê°€ 0ì´ë¯€ë¡œ ë” ì´ìƒ ì§„í–‰í•  í•„ìš” ì—†ì´ return. ì •ìƒì ì¸ ì™„ë£Œì— í•´ë‹¹ë¨.
 
-	// dstÀÇ 0¹øÀº ÇàÀÇ °³¼ö, ¿­ÀÇ °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼Ò °³¼ö µîÀ» ÀúÀåÇÏ¹Ç·Î ¿ø¼ÒÀÇ ÀúÀå °ø°£À» 1¹øºÎÅÍ ½ÃÀÛÇÏµµ·Ï ÁöÁ¤ÇÑ´Ù.
+	// dstì˜ 0ë²ˆì€ í–‰ì˜ ê°œìˆ˜, ì—´ì˜ ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ì†Œ ê°œìˆ˜ ë“±ì„ ì €ì¥í•˜ë¯€ë¡œ ì›ì†Œì˜ ì €ì¥ ê³µê°„ì„ 1ë²ˆë¶€í„° ì‹œì‘í•˜ë„ë¡ ì§€ì •í•œë‹¤.
 	curPosInDst = 1;
 
-	// colIdx¸¦ 0¹øºÎÅÍ src[0].colIdx - 1 ±îÁö ÁøÇàÇÏ¸é¼­
-	// ÁøÇà ÁßÀÎ colIdx¿Í °°Àº colIdx¸¦ °®´Â ¿ø¼Ò¸¦ Ã£¾Æ¼­ dst¿¡ ÀúÀåÇÑ´Ù. 
+	// colIdxë¥¼ 0ë²ˆë¶€í„° src[0].colIdx - 1 ê¹Œì§€ ì§„í–‰í•˜ë©´ì„œ
+	// ì§„í–‰ ì¤‘ì¸ colIdxì™€ ê°™ì€ colIdxë¥¼ ê°–ëŠ” ì›ì†Œë¥¼ ì°¾ì•„ì„œ dstì— ì €ì¥í•œë‹¤. 
 	for(colIdx = 0; colIdx < src[0].colIdx; colIdx++) {
-		for(eleIdx = 1; eleIdx <= src[0].value; eleIdx++) { /* note: 1ºÎÅÍ ½ÃÀÛ value±îÁö ÁøÇà. 0Àº row °³¼ö ÀúÀå ¿ëµµ·Î »ç¿ëµÊ */
-			if(src[eleIdx].colIdx == colIdx) { // ÇöÀç ÁöÁ¤µÈ colIdx¿Í °°Àº colIdx¸¦ °®´Â src ¿ø¼Ò°¡ ³ª¿À¸é dst¿¡ ÀúÀå.
+		for(eleIdx = 1; eleIdx <= src[0].value; eleIdx++) { /* note: 1ë¶€í„° ì‹œì‘ valueê¹Œì§€ ì§„í–‰. 0ì€ row ê°œìˆ˜ ì €ì¥ ìš©ë„ë¡œ ì‚¬ìš©ë¨ */
+			if(src[eleIdx].colIdx == colIdx) { // í˜„ì¬ ì§€ì •ëœ colIdxì™€ ê°™ì€ colIdxë¥¼ ê°–ëŠ” src ì›ì†Œê°€ ë‚˜ì˜¤ë©´ dstì— ì €ì¥.
 				dst[curPosInDst].colIdx = src[eleIdx].rowIdx;
 				dst[curPosInDst].rowIdx = src[eleIdx].colIdx;
 				dst[curPosInDst].value = src[eleIdx].value;
@@ -105,13 +105,13 @@ int sparse_matrix_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 		}
 	}
 
-	// Å×½ºÆ® ÄÚµå
+	// í…ŒìŠ¤íŠ¸ ì½”ë“œ
 	if( (curPosInDst-1) != src[0].value) {
-		printf("srcÀÇ ¸ğµç ¿ø¼Ò°¡ dst·Î º¹»çµÇÁö ¾ÊÀ½\n");
-		return -2; // transpose ¿¬»ê ¿À·ù: -2
+		printf("srcì˜ ëª¨ë“  ì›ì†Œê°€ dstë¡œ ë³µì‚¬ë˜ì§€ ì•ŠìŒ\n");
+		return -2; // transpose ì—°ì‚° ì˜¤ë¥˜: -2
 	}
 
-	return 0; // Á¤»ó ¿Ï·á
+	return 0; // ì •ìƒ ì™„ë£Œ
 }
 
 int sparse_matrix_fast_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
@@ -124,65 +124,65 @@ int sparse_matrix_fast_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 	int	*startPosOfEachCol;
 	int	posInDst;
 
-	// source¿¡ µ¥ÀÌÅ¸°¡ ¾ø°Å³ª destination ¸Ş¸ğ¸® °ø°£ÀÌ ¾øÀ¸¸é -1À» returnÇÑ´Ù.
-	if(!src || !dst) return -1; // ÀÔ·Â ¿À·ù: -1
+	// sourceì— ë°ì´íƒ€ê°€ ì—†ê±°ë‚˜ destination ë©”ëª¨ë¦¬ ê³µê°„ì´ ì—†ìœ¼ë©´ -1ì„ returní•œë‹¤.
+	if(!src || !dst) return -1; // ì…ë ¥ ì˜¤ë¥˜: -1
 
-	// row °³¼ö, col °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼Ò °³¼ö¸¦ È®ÀÎÇÑ´Ù.
+	// row ê°œìˆ˜, col ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ì†Œ ê°œìˆ˜ë¥¼ í™•ì¸í•œë‹¤.
 	rowNum = src[0].rowIdx;
 	colNum = src[0].colIdx;
 	eleNum = src[0].value;
 
-	// dst[0]¿¡ row °³¼ö, col °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼ö °³¼ö¸¦ ÀúÀåÇÑ´Ù.
-	dst[0].rowIdx = colNum; // srcÀÇ ¿­ÀÇ °³¼ö°¡ dstÀÇ ÇàÀÇ °³¼ö°¡ µÈ´Ù.
-	dst[0].colIdx = rowNum; // srcÀÇ ÇàÀÇ °³¼ö°¡ dstÀÇ ¿­ÀÇ °³¼ö°¡ µÈ´Ù.
-	dst[0].value = eleNum; // 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ °³¼ö´Â src¿Í dst°¡ °°´Ù. ¿Ö³ÄÇÏ¸é, srcÀÇ ¸ğµç ¿ø¼Ò¸¦ º¹»çÇÏ±â ¶§¹®ÀÌ´Ù. 
+	// dst[0]ì— row ê°œìˆ˜, col ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ìˆ˜ ê°œìˆ˜ë¥¼ ì €ì¥í•œë‹¤.
+	dst[0].rowIdx = colNum; // srcì˜ ì—´ì˜ ê°œìˆ˜ê°€ dstì˜ í–‰ì˜ ê°œìˆ˜ê°€ ëœë‹¤.
+	dst[0].colIdx = rowNum; // srcì˜ í–‰ì˜ ê°œìˆ˜ê°€ dstì˜ ì—´ì˜ ê°œìˆ˜ê°€ ëœë‹¤.
+	dst[0].value = eleNum; // 0ì´ ì•„ë‹Œ ì›ì†Œì˜ ê°œìˆ˜ëŠ” srcì™€ dstê°€ ê°™ë‹¤. ì™œëƒí•˜ë©´, srcì˜ ëª¨ë“  ì›ì†Œë¥¼ ë³µì‚¬í•˜ê¸° ë•Œë¬¸ì´ë‹¤. 
 
-	// ¿ø¼ÒÀÇ °³¼ö°¡ 0ÀÌ¸é ´õ ÀÌ»ó ÁøÇàÇÒ ÇÊ¿ä ¾øÀ½
+	// ì›ì†Œì˜ ê°œìˆ˜ê°€ 0ì´ë©´ ë” ì´ìƒ ì§„í–‰í•  í•„ìš” ì—†ìŒ
 	if(eleNum == 0)
-		return 0; // Á¤»óÀûÀÎ ¿Ï·á¿¡ ÇØ´çµÊ.
+		return 0; // ì •ìƒì ì¸ ì™„ë£Œì— í•´ë‹¹ë¨.
 
-	// Çàº°·Î src sparse_matrix¿¡ 0ÀÌ ¾Æ´Ñ ¿ø¼Ò°¡ ¸î °³ÀÎÁö¸¦ ÀúÀåÇÏ±â À§ÇÑ °ø°£ ÇÒ´ç 
+	// í–‰ë³„ë¡œ src sparse_matrixì— 0ì´ ì•„ë‹Œ ì›ì†Œê°€ ëª‡ ê°œì¸ì§€ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ê³µê°„ í• ë‹¹ 
 	eleNumOfEachCol = (int *)malloc(sizeof(int)*colNum);
 	if(!eleNumOfEachCol)
-		return -2; // ¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ.
+		return -2; // ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨.
 	
-	// Çàº°·Î dst sparse_matrix¿¡ 0ÀÌ ¾Æ´Ñ ¿ø¼Ò°¡ À§Ä¡ÇÏ´Â ¿µ¿ª Áß Ã¹ ¹øÂ° À§Ä¡¸¦ ÀúÀåÇÏ±â À§ÇÑ °ø°£ ÇÒ´ç
+	// í–‰ë³„ë¡œ dst sparse_matrixì— 0ì´ ì•„ë‹Œ ì›ì†Œê°€ ìœ„ì¹˜í•˜ëŠ” ì˜ì—­ ì¤‘ ì²« ë²ˆì§¸ ìœ„ì¹˜ë¥¼ ì €ì¥í•˜ê¸° ìœ„í•œ ê³µê°„ í• ë‹¹
 	startPosOfEachCol = (int *)malloc(sizeof(int)*colNum);
 	if(!startPosOfEachCol) {
 		free(eleNumOfEachCol);
-		return -3; // ¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ
+		return -3; // ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨
 	}
 
-	// ÇÒ´çÇÑ ¸Ş¸ğ¸® ÃÊ±âÈ­
+	// í• ë‹¹í•œ ë©”ëª¨ë¦¬ ì´ˆê¸°í™”
 	for(colIdx = 0; colIdx < colNum; colIdx++) {
 		eleNumOfEachCol[colIdx] = 0;
 		startPosOfEachCol[colIdx] = 0;
 	}
 
-	// srcÀÇ ¸ğµç ¿ø¼Ò¸¦ scanÇÏ¸é¼­ colº°·Î ¸î °³ÀÇ ¿ø¼Ò°¡ ÀÖ´ÂÁö È®ÀÎ
-	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) // eleIdx = 0ÀÎ °ø°£Àº ÇàÀÇ °³¼ö µîÀ» ÀúÀåÇÏ´Â °÷ÀÌ¹Ç·Î 1ºÎÅÍ ½ÃÀÛÇÑ´Ù. eleNum°ú °°Àº °ªÀÌ µÉ ¶§±îÁö ÁøÇàÇØ¾ß ÇÔ.
+	// srcì˜ ëª¨ë“  ì›ì†Œë¥¼ scaní•˜ë©´ì„œ colë³„ë¡œ ëª‡ ê°œì˜ ì›ì†Œê°€ ìˆëŠ”ì§€ í™•ì¸
+	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) // eleIdx = 0ì¸ ê³µê°„ì€ í–‰ì˜ ê°œìˆ˜ ë“±ì„ ì €ì¥í•˜ëŠ” ê³³ì´ë¯€ë¡œ 1ë¶€í„° ì‹œì‘í•œë‹¤. eleNumê³¼ ê°™ì€ ê°’ì´ ë  ë•Œê¹Œì§€ ì§„í–‰í•´ì•¼ í•¨.
 		eleNumOfEachCol[src[eleIdx].colIdx]++;
 
-	// eleNumOfEachCol[]¸¦ scanÇÏ¸é¼­ dst¿¡¼­ ½ÃÀÛÇÏ´Â À§Ä¡¸¦ °è»êÇÑ´Ù.
-	//		dstÀÇ Ã¹ ¹øÂ° ¿ø¼Ò´Â Æ¯¼öÇÑ ¿ëµµ·Î »ç¿ëµÇ°í ÀÖÀ¸¸ç ±× ¿ëµµ´Â ÇàÀÇ °³¼ö, ¿­ÀÇ °³¼ö, 0ÀÌ ¾Æ´Ñ ¿ø¼ÒÀÇ °³¼ö¸¦ ÀúÀåÇÏ°í ÀÖ´Ù.
-	//		µû¶ó¼­, 0 columnÀÇ ½ÃÀÛ À§Ä¡¸¦ dstÀÇ 1¹øÂ° À§Ä¡·Î ÁöÁ¤ÇÑ´Ù.
-	// 0¹ø columnÀÇ ½ÃÀÛ À§Ä¡´Â À§¿¡¼­ Á¤ÇßÀ¸¹Ç·Î ¾Æ·¡ÀÇ for-loop´Â 1¹øºÎÅÍ ½ÃÀÛÇÑ´Ù.
+	// eleNumOfEachCol[]ë¥¼ scaní•˜ë©´ì„œ dstì—ì„œ ì‹œì‘í•˜ëŠ” ìœ„ì¹˜ë¥¼ ê³„ì‚°í•œë‹¤.
+	//		dstì˜ ì²« ë²ˆì§¸ ì›ì†ŒëŠ” íŠ¹ìˆ˜í•œ ìš©ë„ë¡œ ì‚¬ìš©ë˜ê³  ìˆìœ¼ë©° ê·¸ ìš©ë„ëŠ” í–‰ì˜ ê°œìˆ˜, ì—´ì˜ ê°œìˆ˜, 0ì´ ì•„ë‹Œ ì›ì†Œì˜ ê°œìˆ˜ë¥¼ ì €ì¥í•˜ê³  ìˆë‹¤.
+	//		ë”°ë¼ì„œ, 0 columnì˜ ì‹œì‘ ìœ„ì¹˜ë¥¼ dstì˜ 1ë²ˆì§¸ ìœ„ì¹˜ë¡œ ì§€ì •í•œë‹¤.
+	// 0ë²ˆ columnì˜ ì‹œì‘ ìœ„ì¹˜ëŠ” ìœ„ì—ì„œ ì •í–ˆìœ¼ë¯€ë¡œ ì•„ë˜ì˜ for-loopëŠ” 1ë²ˆë¶€í„° ì‹œì‘í•œë‹¤.
 	startPosOfEachCol[0] = 1;
 	for(colIdx = 1; colIdx < colNum; colIdx++)
 		startPosOfEachCol[colIdx] = startPosOfEachCol[colIdx - 1] + eleNumOfEachCol[colIdx - 1];
 
-	// src¸¦ elementº°·Î scanÇÏ¸é¼­
-	// °¢ ¿ø¼ÒÀÇ colIdx¿Í startPosOfEachCol[colIdx]¸¦ ÀÌ¿ëÇÏ¿© ¿ø¼Ò°¡ dst¿¡¼­ ¹èÄ¡µÉ ÃÖÁ¾ À§Ä¡¿¡ ÀúÀåÇÑ´Ù.
-	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) { // 0¹øÀº Æ¯¼ö ¿ëµµÀÌ¹Ç·Î 1¹øºÎÅÍ ½ÃÀÛÇÑ´Ù.
+	// srcë¥¼ elementë³„ë¡œ scaní•˜ë©´ì„œ
+	// ê° ì›ì†Œì˜ colIdxì™€ startPosOfEachCol[colIdx]ë¥¼ ì´ìš©í•˜ì—¬ ì›ì†Œê°€ dstì—ì„œ ë°°ì¹˜ë  ìµœì¢… ìœ„ì¹˜ì— ì €ì¥í•œë‹¤.
+	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) { // 0ë²ˆì€ íŠ¹ìˆ˜ ìš©ë„ì´ë¯€ë¡œ 1ë²ˆë¶€í„° ì‹œì‘í•œë‹¤.
 
-		// src elementÀÇ colIdx¸¦ ÀÌ¿ëÇØ¼­ ÀÌ element°¡ dstÀÇ ¸î ¹øÂ° À§Ä¡¿¡ ÀúÀåµÉ Áö¸¦ startPosOfEachCol[]À» ÀÌ¿ëÇØ¼­ ÃßÃâÇÔ.
+		// src elementì˜ colIdxë¥¼ ì´ìš©í•´ì„œ ì´ elementê°€ dstì˜ ëª‡ ë²ˆì§¸ ìœ„ì¹˜ì— ì €ì¥ë  ì§€ë¥¼ startPosOfEachCol[]ì„ ì´ìš©í•´ì„œ ì¶”ì¶œí•¨.
 		posInDst = startPosOfEachCol[src[eleIdx].colIdx];
 
 		dst[posInDst].colIdx = src[eleIdx].rowIdx;
 		dst[posInDst].rowIdx = src[eleIdx].colIdx;
 		dst[posInDst].value = src[eleIdx].value;
 
-		// ´ÙÀ½ ¹ø¿¡ µ¿ÀÏÇÑ colIdxÀÇ ¿ø¼Ò°¡ ³ª¿Ã ¶§ dst¿¡¼­ ÀúÀåµÉ À§Ä¡¸¦ ÁöÁ¤
+		// ë‹¤ìŒ ë²ˆì— ë™ì¼í•œ colIdxì˜ ì›ì†Œê°€ ë‚˜ì˜¬ ë•Œ dstì—ì„œ ì €ì¥ë  ìœ„ì¹˜ë¥¼ ì§€ì •
 		startPosOfEachCol[src[eleIdx].colIdx]++;
 	}
 
@@ -193,7 +193,7 @@ int sparse_matrix_fast_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 }
 
 //
-// matrix¿¡¼­ startEldIdxºÎÅÍ ½ÃÀÛÇØ¼­ matrix[startEleIdx].rowIdx¿Í °ªÀÌ °°Àº ¸¶Áö¸· ¿ø¼Ò¸¦ Ã£¾Æ¼­ returnÇÑ´Ù.
+// matrixì—ì„œ startEldIdxë¶€í„° ì‹œì‘í•´ì„œ matrix[startEleIdx].rowIdxì™€ ê°’ì´ ê°™ì€ ë§ˆì§€ë§‰ ì›ì†Œë¥¼ ì°¾ì•„ì„œ returní•œë‹¤.
 //
 int	findEndIdxWithEqualRowIdx(sparse_matrix_t *matrix, int startEleIdx)
 {
@@ -205,10 +205,10 @@ int	findEndIdxWithEqualRowIdx(sparse_matrix_t *matrix, int startEleIdx)
 }
 
 //
-// µÎ °³ vectorÀÇ inner product (³»Àû)À» ±¸ÇÑ´Ù.
-// 3Â÷¿ø º¤ÅÍÀÇ °æ¿ì (x1, y1, z1)°ú (x2, y2, z2)ÀÇ ³»ÀûÀº x1y2 + x2y2 + z1z2ÀÌ´Ù.
-// matrixA x matrixB¸¦ ±¸ÇÏ±â À§ÇØ¼­ matrixA¿Í matrixBTÀÇ °¢ ¿­À» º¤ÅÍ·Î Ã³¸®ÇØ¼­ °öÇÒ ¶§
-// µÎ º¤ÅÍÀÇ °öÀº colIdx°¡ °°Àº °Í³¢¸® °öÇÏ°Ô µÈ´Ù.
+// ë‘ ê°œ vectorì˜ inner product (ë‚´ì )ì„ êµ¬í•œë‹¤.
+// 3ì°¨ì› ë²¡í„°ì˜ ê²½ìš° (x1, y1, z1)ê³¼ (x2, y2, z2)ì˜ ë‚´ì ì€ x1y2 + x2y2 + z1z2ì´ë‹¤.
+// matrixA x matrixBë¥¼ êµ¬í•˜ê¸° ìœ„í•´ì„œ matrixAì™€ matrixBTì˜ ê° ì—´ì„ ë²¡í„°ë¡œ ì²˜ë¦¬í•´ì„œ ê³±í•  ë•Œ
+// ë‘ ë²¡í„°ì˜ ê³±ì€ colIdxê°€ ê°™ì€ ê²ƒë¼ë¦¬ ê³±í•˜ê²Œ ëœë‹¤.
 //
 int	vectorInnerProduct(sparse_matrix_t *A, int startOfA, int endOfA, sparse_matrix_t *B, int startOfB, int endOfB)
 {
@@ -234,7 +234,7 @@ int	vectorInnerProduct(sparse_matrix_t *A, int startOfA, int endOfA, sparse_matr
 }
 
 /*
-	sparse matrixÀÇ °ö¼À
+	sparse matrixì˜ ê³±ì…ˆ
 	C = A x B
 */
 int	sparse_matrix_multi(sparse_matrix_t *matrixC, sparse_matrix_t *matrixA, sparse_matrix_t *matrixB)
@@ -245,34 +245,34 @@ int	sparse_matrix_multi(sparse_matrix_t *matrixC, sparse_matrix_t *matrixA, spar
 	int	eleValueOfC;
 	sparse_matrix_t	*matrixBT;
 
-	matrixC[0].rowIdx = matrixA[0].rowIdx; // °ö¼À °á°úÀÇ Çà(row) °³¼ö
-	matrixC[0].colIdx = matrixB[0].colIdx; // °ö¼À °á°úÀÇ ¿­(column) °³¼ö
-	matrixC[0].value = 0; // °ö¼À °á°úÀÇ 0ÀÌ ¾Æ´Ñ ¿ø¼Ò °³¼ö
-	curEleIdxOfC = 1; // sparse_matrix_t ¹è¿­ÀÇ ¿ø¼Ò °³¼ö
+	matrixC[0].rowIdx = matrixA[0].rowIdx; // ê³±ì…ˆ ê²°ê³¼ì˜ í–‰(row) ê°œìˆ˜
+	matrixC[0].colIdx = matrixB[0].colIdx; // ê³±ì…ˆ ê²°ê³¼ì˜ ì—´(column) ê°œìˆ˜
+	matrixC[0].value = 0; // ê³±ì…ˆ ê²°ê³¼ì˜ 0ì´ ì•„ë‹Œ ì›ì†Œ ê°œìˆ˜
+	curEleIdxOfC = 1; // sparse_matrix_t ë°°ì—´ì˜ ì›ì†Œ ê°œìˆ˜
 
-	matrixBT = (sparse_matrix_t *)malloc(sizeof(sparse_matrix_t)*(matrixB[0].value + 1)); // transpose ÀúÀåÇÒ ¸Ş¸ğ¸® »ı¼º
-	if(sparse_matrix_fast_transpose(matrixBT, matrixB)) { // matrix transpose ¼öÇà
+	matrixBT = (sparse_matrix_t *)malloc(sizeof(sparse_matrix_t)*(matrixB[0].value + 1)); // transpose ì €ì¥í•  ë©”ëª¨ë¦¬ ìƒì„±
+	if(sparse_matrix_fast_transpose(matrixBT, matrixB)) { // matrix transpose ìˆ˜í–‰
 		free(matrixBT);
-		return -1; // transpose ½ÇÆĞ
+		return -1; // transpose ì‹¤íŒ¨
 	}
 
-	startEleIdxOfA = matrixA[1].rowIdx; // matrixAÀÇ Ã¹ ¹øÂ° ¿ø¼ÒÀÇ Çà ¹øÈ£
+	startEleIdxOfA = matrixA[1].rowIdx; // matrixAì˜ ì²« ë²ˆì§¸ ì›ì†Œì˜ í–‰ ë²ˆí˜¸
 	do {
-		endEleIdxOfA = findEndIdxWithEqualRowIdx(matrixA, startEleIdxOfA); // µ¿ÀÏÇÑ Çà ¹øÈ£¸¦ °®´Â ¸¶Áö¸· ¿ø¼Ò À§Ä¡
+		endEleIdxOfA = findEndIdxWithEqualRowIdx(matrixA, startEleIdxOfA); // ë™ì¼í•œ í–‰ ë²ˆí˜¸ë¥¼ ê°–ëŠ” ë§ˆì§€ë§‰ ì›ì†Œ ìœ„ì¹˜
 
-		startEleIdxOfBT = 1; // matrixBTÀÇ Ã¹ ¹øÂ° ¿ø¼ÒÀÇ Çà ¹øÈ£
-		eleValueOfC = 0; // matrixC¿¡ ÀúÀåÇÒ ¿ø¼Ò °ª(c_ij = a_ik * b_kj) ÃÊ±âÈ­ 
+		startEleIdxOfBT = 1; // matrixBTì˜ ì²« ë²ˆì§¸ ì›ì†Œì˜ í–‰ ë²ˆí˜¸
+		eleValueOfC = 0; // matrixCì— ì €ì¥í•  ì›ì†Œ ê°’(c_ij = a_ik * b_kj) ì´ˆê¸°í™” 
 		do {
-			endEleIdxOfBT = findEndIdxWithEqualRowIdx(matrixBT, startEleIdxOfBT); // matrixBTÀÇ Ã¹ ¹øÂ° ¿ø¼ÒÀÇ Çà ¹øÈ£
+			endEleIdxOfBT = findEndIdxWithEqualRowIdx(matrixBT, startEleIdxOfBT); // matrixBTì˜ ì²« ë²ˆì§¸ ì›ì†Œì˜ í–‰ ë²ˆí˜¸
 
-			// c_ij °è»êÇÏ´Â ºÎºĞ
-			eleValueOfC = vectorInnerProduct(matrixA, startEleIdxOfA, endEleIdxOfA, matrixBT, startEleIdxOfBT, endEleIdxOfBT); // µÎ °³ÀÇ º¤ÅÍ ³»Àû. colIdx°¡ °°Àº °æ¿ì¸¸ °öÇØ¼­ ´õÇÔ.
+			// c_ij ê³„ì‚°í•˜ëŠ” ë¶€ë¶„
+			eleValueOfC = vectorInnerProduct(matrixA, startEleIdxOfA, endEleIdxOfA, matrixBT, startEleIdxOfBT, endEleIdxOfBT); // ë‘ ê°œì˜ ë²¡í„° ë‚´ì . colIdxê°€ ê°™ì€ ê²½ìš°ë§Œ ê³±í•´ì„œ ë”í•¨.
 		
-			if(eleValueOfC != 0) { // 0ÀÌ ¾Æ´Ï¹Ç·Î matrixC¿¡ ÀúÀå
-				matrixC[curEleIdxOfC].rowIdx = matrixA[startEleIdxOfA].rowIdx; // ÀúÀåµÇ´Â ¿ø¼ÒÀÇ rowIdx´Â matrixA ¿ø¼ÒÀÇ rowIdx
-				matrixC[curEleIdxOfC].colIdx = matrixBT[startEleIdxOfBT].rowIdx; // ÀúÀåµÇ´Â ¿ø¼ÒÀÇ colIdx´Â matrixBT ¿ø¼ÒÀÇ rowIdx
-				matrixC[curEleIdxOfC].value = eleValueOfC; // sum(a_ik * b_kj) ÀúÀå
-				curEleIdxOfC++; // ´ÙÀ½ ¹ø¿¡ ÀúÀåÇÒ À§Ä¡ ÁöÁ¤
+			if(eleValueOfC != 0) { // 0ì´ ì•„ë‹ˆë¯€ë¡œ matrixCì— ì €ì¥
+				matrixC[curEleIdxOfC].rowIdx = matrixA[startEleIdxOfA].rowIdx; // ì €ì¥ë˜ëŠ” ì›ì†Œì˜ rowIdxëŠ” matrixA ì›ì†Œì˜ rowIdx
+				matrixC[curEleIdxOfC].colIdx = matrixBT[startEleIdxOfBT].rowIdx; // ì €ì¥ë˜ëŠ” ì›ì†Œì˜ colIdxëŠ” matrixBT ì›ì†Œì˜ rowIdx
+				matrixC[curEleIdxOfC].value = eleValueOfC; // sum(a_ik * b_kj) ì €ì¥
+				curEleIdxOfC++; // ë‹¤ìŒ ë²ˆì— ì €ì¥í•  ìœ„ì¹˜ ì§€ì •
 			}
 
 			startEleIdxOfBT = endEleIdxOfBT + 1;
