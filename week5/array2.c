@@ -6,6 +6,7 @@ int main()
 	int a[][2] = { {7}, {11,13}, {17,19} };
 	int *p = (int*) a; //casting
   	//int **pp = (int**) a; //wrong
+	//int (*pp)[2] = a; //ok
 
 	int i,j;
 	for (i= 0; i < 3; i++)
