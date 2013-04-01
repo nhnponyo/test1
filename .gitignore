@@ -1,0 +1,6 @@
+*.o
+*.EXE
+*.exe
+*.obj
+Debug/
+debug/
