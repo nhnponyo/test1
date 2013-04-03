@@ -8,20 +8,18 @@ int** make2Darray(int m, int n)
 	p = (int**) malloc(m* sizeof(int*));
 	for(i=0; i < m; i++)
 		p[i] = (int *) malloc(n * sizeof(int));
-
 	return p;
 }
-
 void free2Darray(int **p, int m, int n)
 {
-
-	return;
+	//implement 
 }
 
 int main()
 {
 	int **pa = make2Darray(5,4);
 	int i, j;
+
 	for(i=0; i < 5; i++)
 		for(j=0; j< 4; j++)
 			pa[i][j] = i*10+j;
@@ -37,7 +35,4 @@ int main()
 	}
 	free2Darray(pa,5,4);
 	return 0;
-
 }
-
-
