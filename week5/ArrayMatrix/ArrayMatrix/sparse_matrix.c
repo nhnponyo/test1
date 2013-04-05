@@ -12,7 +12,7 @@
 #include "sparse_matrix_types.h"
 #include "def.h"
 
-#if TEMPLATE_SPARSE_MATRIX
+#if !TEMPLATE_SPARSE_MATRIX
 
 #define	ZERO_RATIO	(0.1 * 100)
 extern int **make2DArray(int rowNum, int colNum);
@@ -81,25 +81,29 @@ int sparse_matrix_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 
 	if(!src || !dst) return -1; // source에 데이타가 없거나 destination 메모리 공간이 없으면 -1을 return한다.
 
-	// dst[0]에 row 개수, col 개수, 0이 아닌 원소 개수를 저장한다.
-	//
-	//                                   채울 부분
-	//
+	// dst[0]에 row 개수, col 개수, 0이 아닌 원수 개수를 저장한다.
+	dst[0].rowIdx = src[0].colIdx; // src의 열의 개수가 dst의 행의 개수가 된다.
+	dst[0].colIdx = src[0].rowIdx; // src의 행의 개수가 dst의 열의 개수가 된다.
+	dst[0].value = src[0].value; // 0이 아닌 원소의 개수는 src와 dst가 같다. 왜냐하면, src의 모든 원소를 복사하기 때문이다. 
 
 	if(src[0].value == 0)
 		return 0; // 원소의 개수가 0이므로 더 이상 진행할 필요 없이 return. 정상적인 완료에 해당됨.
 
 	// dst의 0번은 행의 개수, 열의 개수, 0이 아닌 원소 개수 등을 저장하므로 원소의 저장 공간을 1번부터 시작하도록 지정한다.
-	// 채울 부분
-	
+	curPosInDst = 1;
+
 	// colIdx를 0번부터 src[0].colIdx - 1 까지 진행하면서
 	// 진행 중인 colIdx와 같은 colIdx를 갖는 원소를 찾아서 dst에 저장한다. 
-	//
-	//
-	//
-	//                                   채울 부분
-	//
-	//
+	for(colIdx = 0; colIdx < src[0].colIdx; colIdx++) {
+		for(eleIdx = 1; eleIdx <= src[0].value; eleIdx++) { /* note: 1부터 시작 value까지 진행. 0은 row 개수 저장 용도로 사용됨 */
+			if(src[eleIdx].colIdx == colIdx) { // 현재 지정된 colIdx와 같은 colIdx를 갖는 src 원소가 나오면 dst에 저장.
+				dst[curPosInDst].colIdx = src[eleIdx].rowIdx;
+				dst[curPosInDst].rowIdx = src[eleIdx].colIdx;
+				dst[curPosInDst].value = src[eleIdx].value;
+				curPosInDst++;
+			}
+		}
+	}
 
 	// 테스트 코드
 	if( (curPosInDst-1) != src[0].value) {
@@ -124,64 +128,66 @@ int sparse_matrix_fast_transpose(sparse_matrix_t *dst, sparse_matrix_t *src)
 	if(!src || !dst) return -1; // 입력 오류: -1
 
 	// row 개수, col 개수, 0이 아닌 원소 개수를 확인한다.
-	//
-	//                        채울 부분
-	//
+	rowNum = src[0].rowIdx;
+	colNum = src[0].colIdx;
+	eleNum = src[0].value;
 
 	// dst[0]에 row 개수, col 개수, 0이 아닌 원수 개수를 저장한다.
-	//
-	//                        채울 부분
-	//
+	dst[0].rowIdx = colNum; // src의 열의 개수가 dst의 행의 개수가 된다.
+	dst[0].colIdx = rowNum; // src의 행의 개수가 dst의 열의 개수가 된다.
+	dst[0].value = eleNum; // 0이 아닌 원소의 개수는 src와 dst가 같다. 왜냐하면, src의 모든 원소를 복사하기 때문이다. 
 
-	// 원소의 개수가 0이면 더 이상 진행할 필요 없이 return한다
-	//
-	//                        채울 부분
+	// 원소의 개수가 0이면 더 이상 진행할 필요 없음
+	if(eleNum == 0)
+		return 0; // 정상적인 완료에 해당됨.
 
-	// 행별로 src sparse_matrix에 0이 아닌 원소가 몇 개인지를 저장하기 위한 공간 할당
-	//
-	//                        채울 부분
+	// 행별로 src sparse_matrix에 0이 아닌 원소가 몇 개인지를 저장하기 위한 공간 할당 
+	eleNumOfEachCol = (int *)malloc(sizeof(int)*colNum);
+	if(!eleNumOfEachCol)
+		return -2; // 메모리 할당 실패.
 	
 	// 행별로 dst sparse_matrix에 0이 아닌 원소가 위치하는 영역 중 첫 번째 위치를 저장하기 위한 공간 할당
-	//
-	//                        채울 부분
-	//
+	startPosOfEachCol = (int *)malloc(sizeof(int)*colNum);
+	if(!startPosOfEachCol) {
+		free(eleNumOfEachCol);
+		return -3; // 메모리 할당 실패
+	}
 
 	// 할당한 메모리 초기화
-	//
-	//                        채울 부분
-	//
+	for(colIdx = 0; colIdx < colNum; colIdx++) {
+		eleNumOfEachCol[colIdx] = 0;
+		startPosOfEachCol[colIdx] = 0;
+	}
 
 	// src의 모든 원소를 scan하면서 col별로 몇 개의 원소가 있는지 확인
-	//
-	//                        채울 부분
-	//
+	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) // eleIdx = 0인 공간은 행의 개수 등을 저장하는 곳이므로 1부터 시작한다. eleNum과 같은 값이 될 때까지 진행해야 함.
+		eleNumOfEachCol[src[eleIdx].colIdx]++;
 
 	// eleNumOfEachCol[]를 scan하면서 dst에서 시작하는 위치를 계산한다.
 	//		dst의 첫 번째 원소는 특수한 용도로 사용되고 있으며 그 용도는 행의 개수, 열의 개수, 0이 아닌 원소의 개수를 저장하고 있다.
 	//		따라서, 0 column의 시작 위치를 dst의 1번째 위치로 지정한다.
 	// 0번 column의 시작 위치는 위에서 정했으므로 아래의 for-loop는 1번부터 시작한다.
-	//
-	//                        채울 부분
-	//
+	startPosOfEachCol[0] = 1;
+	for(colIdx = 1; colIdx < colNum; colIdx++)
+		startPosOfEachCol[colIdx] = startPosOfEachCol[colIdx - 1] + eleNumOfEachCol[colIdx - 1];
 
 	// src를 element별로 scan하면서
 	// 각 원소의 colIdx와 startPosOfEachCol[colIdx]를 이용하여 원소가 dst에서 배치될 최종 위치에 저장한다.
-	//
-	//
-	//
-	//
-	//
-	//                        채울 부분
-	//
-	//
-	//
-	//
-	//
+	for(eleIdx = 1; eleIdx <= eleNum; eleIdx++) { // 0번은 특수 용도이므로 1번부터 시작한다.
 
-	// 할당한 메모리를 free한다.
-	//
-	//                        채울 부분
-	//
+		// src element의 colIdx를 이용해서 이 element가 dst의 몇 번째 위치에 저장될 지를 startPosOfEachCol[]을 이용해서 추출함.
+		posInDst = startPosOfEachCol[src[eleIdx].colIdx];
+
+		dst[posInDst].colIdx = src[eleIdx].rowIdx;
+		dst[posInDst].rowIdx = src[eleIdx].colIdx;
+		dst[posInDst].value = src[eleIdx].value;
+
+		// 다음 번에 동일한 colIdx의 원소가 나올 때 dst에서 저장될 위치를 지정
+		startPosOfEachCol[src[eleIdx].colIdx]++;
+	}
+
+	free(startPosOfEachCol);
+	free(eleNumOfEachCol);
 
 	return 0;
 }
@@ -193,11 +199,8 @@ int	findEndIdxWithEqualRowIdx(sparse_matrix_t *matrix, int startEleIdx)
 {
 	int	endEleIdx = startEleIdx;
 
-	//
-	//               채울 부분
-	//
-	//
-
+	while( (endEleIdx + 1) <= matrix[0].value && matrix[endEleIdx+1].rowIdx == matrix[startEleIdx].rowIdx) endEleIdx++;
+	
 	return endEleIdx;
 }
 
@@ -215,13 +218,17 @@ int	vectorInnerProduct(sparse_matrix_t *A, int startOfA, int endOfA, sparse_matr
 	aIdx = startOfA;
 	bIdx = startOfB;
 
-	//
-	//
-	//
-	//                             채울 부분
-	//
-	//
-	//
+	while(aIdx <= endOfA && bIdx <= endOfB) {
+		if(A[aIdx].colIdx == B[bIdx].colIdx) {
+			value += A[aIdx].value * B[bIdx].value;
+			aIdx++;
+			bIdx++;
+		}
+		else if(A[aIdx].colIdx < B[bIdx].colIdx)
+			aIdx++;
+		else
+			bIdx++;
+	}
 
 	return value;
 }
@@ -238,46 +245,48 @@ int	sparse_matrix_multi(sparse_matrix_t *matrixC, sparse_matrix_t *matrixA, spar
 	int	eleValueOfC;
 	sparse_matrix_t	*matrixBT;
 
-	// matrixC의 0번째 배열 원소의 값을 초기화한다.
-	//
-	//                         채울 부분
-	//
+	matrixC[0].rowIdx = matrixA[0].rowIdx; // 곱셈 결과의 행(row) 개수
+	matrixC[0].colIdx = matrixB[0].colIdx; // 곱셈 결과의 열(column) 개수
+	matrixC[0].value = 0; // 곱셈 결과의 0이 아닌 원소 개수
+	curEleIdxOfC = 1; // sparse_matrix_t 배열의 원소 개수
 
-	// parse_matrix_t 배열의 원소 개수를 초기화한다.
-	//                         채울 부분
+	matrixBT = (sparse_matrix_t *)malloc(sizeof(sparse_matrix_t)*(matrixB[0].value + 1)); // transpose 저장할 메모리 생성
+	if(sparse_matrix_fast_transpose(matrixBT, matrixB)) { // matrix transpose 수행
+		free(matrixBT);
+		return -1; // transpose 실패
+	}
 
-	// matrixBT를 위한 메모리를 동적할당하고 fast_transpose()를 적용한다.
-	//
-	//
-	//                         채울 부분
-	//
-	//
+	startEleIdxOfA = matrixA[1].rowIdx; // matrixA의 첫 번째 원소의 행 번호
+	do {
+		endEleIdxOfA = findEndIdxWithEqualRowIdx(matrixA, startEleIdxOfA); // 동일한 행 번호를 갖는 마지막 원소 위치
 
+		startEleIdxOfBT = 1; // matrixBT의 첫 번째 원소의 행 번호
+		eleValueOfC = 0; // matrixC에 저장할 원소 값(c_ij = a_ik * b_kj) 초기화 
+		do {
+			endEleIdxOfBT = findEndIdxWithEqualRowIdx(matrixBT, startEleIdxOfBT); // matrixBT의 첫 번째 원소의 행 번호
 
-	// matrixA의 블럭을 찾는 루프를 구성한다.
-	//     루프 안에서 matrixBT의 블럭을 찾는 루프를 구성한다.
-	//           2중 루프 안에서 두 개의 블럭을 벡터로 간주해서 내적을 구한 후 결과값을 matrixC[curEleIdxOfC]에 저장한다.
-	//
-	//
-	//
-	//
-	//
-	//           위의 알고리즘을 구현해서 채울 부분
-	//
-	//
-	//
-	//
-	//
-	//
+			// c_ij 계산하는 부분
+			eleValueOfC = vectorInnerProduct(matrixA, startEleIdxOfA, endEleIdxOfA, matrixBT, startEleIdxOfBT, endEleIdxOfBT); // 두 개의 벡터 내적. colIdx가 같은 경우만 곱해서 더함.
+		
+			if(eleValueOfC != 0) { // 0이 아니므로 matrixC에 저장
+				matrixC[curEleIdxOfC].rowIdx = matrixA[startEleIdxOfA].rowIdx; // 저장되는 원소의 rowIdx는 matrixA 원소의 rowIdx
+				matrixC[curEleIdxOfC].colIdx = matrixBT[startEleIdxOfBT].rowIdx; // 저장되는 원소의 colIdx는 matrixBT 원소의 rowIdx
+				matrixC[curEleIdxOfC].value = eleValueOfC; // sum(a_ik * b_kj) 저장
+				curEleIdxOfC++; // 다음 번에 저장할 위치 지정
+			}
+
+			startEleIdxOfBT = endEleIdxOfBT + 1;
+			eleValueOfC = 0;
+		} while(startEleIdxOfBT <= matrixBT[0].value);
+
+		startEleIdxOfA = endEleIdxOfA + 1; 
+	} while(startEleIdxOfA <= matrixA[0].value);
 
 	matrixC[0].value = curEleIdxOfC - 1; 
 
-	// 할당한 메모리를 free한다.
-	//
-	//                채울 부분
+	free(matrixBT);
 
 	return 0;
 }
 
-
-#endif // TEMPLATE_SPARSE_MATRIX
+#endif

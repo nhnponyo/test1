@@ -9,10 +9,10 @@
 
 #include "def.h"
 
-#if !TEMPLATE_MATRIX
+#if TEMPLATE_MATRIX
 
 /*
-	기능: 두 개의 matrix가 주어지면 두 matrix의 합을 계산
+	기능: 두 개의 matrix가 주어지면 두 matrix의 합을 계산한다.
 	input: matrixA, matrixB, rowIdx, colNum
 			rowNum: 행의 개수
 			colNum: 열의 개수
@@ -21,15 +21,14 @@
 */
 void matrixSum(int **matrixResult, int **matrixA, int **matrixB, int rowNum, int colNum)
 {
-	int	rowIdx, colIdx;
-
-	for(rowIdx=0; rowIdx < rowNum; rowIdx++)
-		for(colIdx=0; colIdx < colNum; colIdx++)
-			matrixResult[rowIdx][colIdx] = matrixA[rowIdx][colIdx] + matrixB[rowIdx][colIdx];
+	//
+	// 채울 부분
+	//
+	// 
 }
 
 /*
-	기능: 두 개의 matrix가 주어지면 두 matrix의 곱을 계산
+	기능: 두 개의 matrix가 주어지면 두 matrix의 곱을 계산한다.
 	input: matrixA, matrixB, rowIdx, colNum
 			rowNum: 행의 개수
 			colNum: 열의 개수
@@ -43,13 +42,13 @@ int matrixMulti(int **matrixResult, int **matrixA, int rowNumOfA, int colNumOfA,
 	if(colNumOfA != rowNumOfB) // matrix 곱셈을 할 수 없음.
 		return -1;
 
-	for(rowIdx=0; rowIdx < rowNumOfA; rowIdx++) {
-		for(colIdx=0; colIdx < colNumOfB; colIdx++) {
-			matrixResult[rowIdx][colIdx] = 0;
-			for(kIdx=0; kIdx < colNumOfA; kIdx++)
-				matrixResult[rowIdx][colIdx] += matrixA[rowIdx][kIdx] * matrixB[kIdx][colIdx];
-		}
-	}
+	//
+	// 채울 부분
+	//
+	// matrixResult의 각 원소의 값을 구하기 위해서 매트릭스의 각 원소를 스캔한다.
+	// scan하면서 각 원소의 값을 계산하기 위해서 아래 작업을 수행한다.
+	//		matrixA의 각 행과 matrixB의 각 열에 대해서 벡터내적을 구한다.
+	//		벡터내적이란 (a1, b1, c1)와 (a2, b2, c3)의 두 벡터가 주여졌을 때 a1*b1 + a2*b2 + a3*b3를 구하는 것이다. 
 
 	return 0;
 }
@@ -64,14 +63,14 @@ int matrixMulti(int **matrixResult, int **matrixA, int rowNumOfA, int colNumOfA,
 */
 void matrixTranspose(int **matrixAT, int **matrixA, int rowNum, int colNum)
 {
-	int	rowIdx, colIdx;
 
-	for(rowIdx=0; rowIdx < rowNum; rowIdx++)
-		for(colIdx=0; colIdx < colNum; colIdx++)
-			matrixAT[colIdx][rowIdx] = matrixA[rowIdx][colIdx];
-
-	return;	
+	//
+	// 채울 부분
+	//
+	// matrixAT에 각 원소의 값을 저장한다.
+	// 이를 위해서 matrixA의 각 원소들을 scan하면서 아래 작업을 수행한다.
+	//		matrixAT[[i][j] = matrixA[j][i]
+	//
 }
 
-
-#endif // !TEMPLATE
+#endif // TEMPLATE

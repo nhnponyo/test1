@@ -1,12 +1,12 @@
 #include "def.h"
 
-#if !TEMPLATE_STRUCTURES
+#if TEMPLATE_STRUCTURES
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
+typedef struct humanBeing {
 	char	name[10];
 	int		age;
 	float	salary;
@@ -22,14 +22,12 @@ typedef struct list {
 //
 int humansEqualByCallByValue(humanBeing_t person1, humanBeing_t person2)
 {
-	if(person1.age != person2.age)
-		return 0;
-
-	if(person1.salary != person2.salary)
-		return 0;
-
-	if(strcmp(person1.name, person2.name))
-		return 0;
+	//
+	// 채울 부분
+	//
+	// 두 사람의 age, 급여, 이름이 모두 같으면 1을 return
+	// 하나라도 다르면 0을 return
+	//
 
 	return 1;
 }
@@ -39,14 +37,12 @@ int humansEqualByCallByValue(humanBeing_t person1, humanBeing_t person2)
 //
 int humansEqualByCallByReference(humanBeing_t *person1, humanBeing_t *person2)
 {
-	if(person1->age != person2->age)
-		return 0;
-
-	if(person1->salary != person2->salary)
-		return 0;
-
-	if(strcmp(person1->name, person2->name))
-		return 0;
+	//
+	// 채울 부분
+	//
+	// 두 사람의 age, 급여, 이름이 모두 같으면 1을 return
+	// 하나라도 다르면 0을 return
+	//
 
 	return 1;
 }
@@ -100,26 +96,5 @@ void	testSelfReferentialStrucutures(void)
 }
 
 
-#endif // !TEMPLATE_STRUCTURES
 
-
-//
-// 추가 테스트라서 임시로 아래에 모아 둠.
-//
-struct rectangle {
-	int x, y;
-	int width, height;
-};
-
-void testRectangleStructures(void)
-{
-	struct rectangle rec1;
-
-	rec1.x = 0;
-	rec1.y = 0;
-
-	rec1.width = 10;
-	rec1.height= 20;
-
-	printf("rec pos (%d, %d) with height %d and width %d\n", rec1.x, rec1.y, rec1.width, rec1.height);
-}
+#endif // TEMPLATE_STRUCTURES
