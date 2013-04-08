@@ -72,4 +72,5 @@ element pop(stack_t *s)
 void stack_full(stack_t *s)
 {
 	//implement
+	exit(EXIT_FAILURE);
 }
