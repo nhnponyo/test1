@@ -8,20 +8,20 @@ typedef int element;
 typedef struct {
 	element stack[MAX_STACK_SIZE];
 	int top;
-} stack_t;
+} my_stack_t;
 
-void init(stack_t * s);
-int is_empty(stack_t *s);
-int is_full(stack_t *s);
-void push(stack_t *s, element item);
-element pop(stack_t *s);
-element peek(stack_t *s);
-void stack_full(stack_t *s);
+void init(my_stack_t * s);
+int is_empty(my_stack_t *s);
+int is_full(my_stack_t *s);
+void push(my_stack_t *s, element item);
+element pop(my_stack_t *s);
+element peek(my_stack_t *s);
+void stack_full(my_stack_t *s);
 
 int main()
 {
 	int b;
-	stack_t stack;
+	my_stack_t stack;
 	init(&stack);
 	b = is_empty(&stack);
 	printf("after init, stack empty? %d\n", b);
@@ -42,34 +42,34 @@ int main()
 }
 
 
-void init(stack_t* s)
+void init(my_stack_t* s)
 {
 	s->top = -1;
 }
 
-int is_empty(stack_t* s)
+int is_empty(my_stack_t* s)
 {
 	return (s->top==-1);
 }
 
-int is_full(stack_t* s)
+int is_full(my_stack_t* s)
 {
 	//implement
 }
 
-void push(stack_t *s, element item)
+void push(my_stack_t *s, element item)
 {
 	if(is_full(s))
 		stack_full(s);
 	s->top++;
 	s->stack[s->top] = item;
 }
-element pop(stack_t *s)
+element pop(my_stack_t *s)
 {
 	//implement
 }
 
-void stack_full(stack_t *s)
+void stack_full(my_stack_t *s)
 {
 	//implement
 	exit(EXIT_FAILURE);
