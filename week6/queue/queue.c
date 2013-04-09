@@ -63,8 +63,8 @@ void enqueue(queue_t *q, element item)
 	if(isFull(q))
 		queueFull(q);
 
-	q->queue[q->rear] = item;
 	q->rear= (q->rear+1)% MAX_Q_SIZE;
+	q->queue[q->rear] = item;
 }
 
 void queueFull(queue_t *q)
