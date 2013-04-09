@@ -55,6 +55,7 @@ int is_empty(my_stack_t* s)
 int is_full(my_stack_t* s)
 {
 	//implement
+	return (s->top==MAX_STACK_SIZE-1);
 }
 
 void push(my_stack_t *s, element item)
@@ -67,10 +68,13 @@ void push(my_stack_t *s, element item)
 element pop(my_stack_t *s)
 {
 	//implement
+	s->top--;
+	return s->stack[s->top+1];
 }
 
 void stack_full(my_stack_t *s)
 {
 	//implement
+	printf("stack full error\n");
 	exit(EXIT_FAILURE);
 }
